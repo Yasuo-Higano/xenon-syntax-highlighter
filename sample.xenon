@@ -1,0 +1,17 @@
+# これはXenonのサンプルファイルです
+
+type Person = {
+  name: string
+  age: number
+}
+
+enum Color {
+  RED
+  GREEN
+  BLUE
+}
+
+@important
+value = 42
+
+name := "Hello World" 

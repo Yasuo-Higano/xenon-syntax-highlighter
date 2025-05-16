@@ -6,16 +6,30 @@
   "engines": {
     "vscode": "^1.100.0"
   },
+  "publisher": "xenon-team",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xenon-team/xenon-syntax-highlight"
+  },
+  "extensionKind": ["ui", "workspace"],
   "categories": [
-    "Other"
+    "Other",
+    "Programming Languages"
   ],
-  "activationEvents": [],
+  "activationEvents": [
+    "onLanguage:xenon",
+    "*"
+  ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
         "command": "xenon-syntax-highlight.helloWorld",
         "title": "Hello World"
+      },
+      {
+        "command": "xenon-syntax-highlight.checkLanguageId",
+        "title": "Xenon: Check Current Language ID"
       }
     ],
     "languages": [
@@ -23,7 +37,11 @@
         "id": "xenon",
         "aliases": ["Xenon", "xenon"],
         "extensions": [".xenon"],
-        "configuration": "./language-configuration.json"
+        "configuration": "./language-configuration.json",
+        "icon": {
+          "light": "./icons/xenon-light.png",
+          "dark": "./icons/xenon-dark.png"
+        }
       }
     ],
     "grammars": [

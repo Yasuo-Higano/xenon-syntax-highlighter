@@ -1,35 +1,116 @@
 {
-    "scopeName": "source.xenon",
-    "name": "Xenon",
-    "patterns": [
-      {
-        "match": "\\b(type|enum|true|false|null)\\b",
-        "name": "keyword.control.xenon"
-      },
-      {
-        "match": "\"([^\"\\\\]|\\\\.)*\"",
-        "name": "string.quoted.double.xenon"
-      },
-      {
-        "match": "'([^'\\\\]|\\\\.)*'",
-        "name": "string.quoted.single.xenon"
-      },
-      {
-        "match": "\\b[0-9]+(\\.[0-9]+)?\\b",
-        "name": "constant.numeric.xenon"
-      },
-      {
-        "match": "\\#[^\n]*",
-        "name": "comment.line.number-sign.xenon"
-      },
-      {
-        "match": "@[a-zA-Z_][a-zA-Z0-9_]*",
-        "name": "entity.name.tag.annotation.xenon"
-      },
-      {
-        "match": "[:-]?=",
-        "name": "keyword.operator.assignment.xenon"
-      }
-    ]
-  }
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "Xenon",
+  "patterns": [
+    {
+      "include": "#keywords"
+    },
+    {
+      "include": "#types"
+    },
+    {
+      "include": "#strings"
+    },
+    {
+      "include": "#comments"
+    },
+    {
+      "include": "#constants"
+    },
+    {
+      "include": "#annotations"
+    },
+    {
+      "include": "#operators"
+    },
+    {
+      "include": "#functions"
+    }
+  ],
+  "repository": {
+    "keywords": {
+      "patterns": [
+        {
+          "match": "\\b(type|enum|interface|class|function|return|if|else|for|while|import|export|as|from|const|let|var|true|false|null|undefined)\\b",
+          "name": "keyword.control.xenon"
+        }
+      ]
+    },
+    "types": {
+      "patterns": [
+        {
+          "match": "\\b(string|number|boolean|any|void)\\b",
+          "name": "support.type.xenon"
+        }
+      ]
+    },
+    "strings": {
+      "patterns": [
+        {
+          "name": "string.quoted.double.xenon",
+          "begin": "\"",
+          "end": "\"",
+          "patterns": [
+            {
+              "name": "constant.character.escape.xenon",
+              "match": "\\\\."
+            }
+          ]
+        },
+        {
+          "name": "string.quoted.single.xenon",
+          "begin": "'",
+          "end": "'",
+          "patterns": [
+            {
+              "name": "constant.character.escape.xenon",
+              "match": "\\\\."
+            }
+          ]
+        }
+      ]
+    },
+    "comments": {
+      "patterns": [
+        {
+          "name": "comment.line.number-sign.xenon",
+          "match": "#.*$"
+        }
+      ]
+    },
+    "constants": {
+      "patterns": [
+        {
+          "match": "\\b[0-9]+(\\.[0-9]+)?\\b",
+          "name": "constant.numeric.xenon"
+        }
+      ]
+    },
+    "annotations": {
+      "patterns": [
+        {
+          "match": "@[a-zA-Z_][a-zA-Z0-9_]*",
+          "name": "entity.name.tag.xenon"
+        }
+      ]
+    },
+    "operators": {
+      "patterns": [
+        {
+          "match": "[:-]?=|[+\\-*/%&|^<>!]=?|=>",
+          "name": "keyword.operator.xenon"
+        }
+      ]
+    },
+    "functions": {
+      "patterns": [
+        {
+          "match": "\\b([a-zA-Z_][a-zA-Z0-9_]*)\\s*(?=\\()",
+          "name": "entity.name.function.xenon"
+        }
+      ]
+    }
+  },
+  "scopeName": "source.xenon"
+}
   
