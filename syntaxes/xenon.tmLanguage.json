@@ -1,0 +1,35 @@
+{
+    "scopeName": "source.xenon",
+    "name": "Xenon",
+    "patterns": [
+      {
+        "match": "\\b(type|enum|true|false|null)\\b",
+        "name": "keyword.control.xenon"
+      },
+      {
+        "match": "\"([^\"\\\\]|\\\\.)*\"",
+        "name": "string.quoted.double.xenon"
+      },
+      {
+        "match": "'([^'\\\\]|\\\\.)*'",
+        "name": "string.quoted.single.xenon"
+      },
+      {
+        "match": "\\b[0-9]+(\\.[0-9]+)?\\b",
+        "name": "constant.numeric.xenon"
+      },
+      {
+        "match": "\\#[^\n]*",
+        "name": "comment.line.number-sign.xenon"
+      },
+      {
+        "match": "@[a-zA-Z_][a-zA-Z0-9_]*",
+        "name": "entity.name.tag.annotation.xenon"
+      },
+      {
+        "match": "[:-]?=",
+        "name": "keyword.operator.assignment.xenon"
+      }
+    ]
+  }
+  
