@@ -9,6 +9,15 @@
       "include": "#types"
     },
     {
+      "include": "#typeDef"
+    },
+    {
+      "include": "#enumDef"
+    },
+    {
+      "include": "#unionDef"
+    },
+    {
       "include": "#strings"
     },
     {
@@ -24,14 +33,32 @@
       "include": "#operators"
     },
     {
+      "include": "#punctuation"
+    },
+    {
+      "include": "#capitalizedIdentifiers"
+    },
+    {
       "include": "#functions"
+    },
+    {
+      "include": "#sections"
+    },
+    {
+      "include": "#binary"
+    },
+    {
+      "include": "#mapLiteral"
+    },
+    {
+      "include": "#listLiteral"
     }
   ],
   "repository": {
     "keywords": {
       "patterns": [
         {
-          "match": "\\b(type|enum|interface|class|function|return|if|else|for|while|import|export|as|from|const|let|var|true|false|null|undefined)\\b",
+          "match": "\\b(deftype|defenum|defunion|list|map|true|false|null)\\b",
           "name": "keyword.control.xenon"
         }
       ]
@@ -39,13 +66,62 @@
     "types": {
       "patterns": [
         {
-          "match": "\\b(string|number|boolean|any|void)\\b",
+          "match": "\\b(int|float|bool|string|binary)\\b",
           "name": "support.type.xenon"
+        },
+        {
+          "match": "\\b([a-zA-Z_][a-zA-Z0-9_]*)\\?\\b",
+          "name": "support.type.nullable.xenon"
+        }
+      ]
+    },
+    "typeDef": {
+      "patterns": [
+        {
+          "match": "(deftype)\\s+([a-zA-Z_][a-zA-Z0-9_]*)",
+          "captures": {
+            "1": { "name": "keyword.control.xenon" },
+            "2": { "name": "entity.name.type.xenon" }
+          }
+        }
+      ]
+    },
+    "enumDef": {
+      "patterns": [
+        {
+          "match": "(defenum)\\s+([a-zA-Z_][a-zA-Z0-9_]*)\\s*=",
+          "captures": {
+            "1": { "name": "keyword.control.xenon" },
+            "2": { "name": "entity.name.type.enum.xenon" }
+          }
+        }
+      ]
+    },
+    "unionDef": {
+      "patterns": [
+        {
+          "match": "(defunion)\\s+([a-zA-Z_][a-zA-Z0-9_]*)\\s*=",
+          "captures": {
+            "1": { "name": "keyword.control.xenon" },
+            "2": { "name": "entity.name.type.union.xenon" }
+          }
         }
       ]
     },
     "strings": {
       "patterns": [
+        {
+          "name": "string.quoted.triple.double.xenon",
+          "begin": "\"\"\"",
+          "end": "\"\"\"",
+          "patterns": []
+        },
+        {
+          "name": "string.quoted.triple.single.xenon",
+          "begin": "'''",
+          "end": "'''",
+          "patterns": []
+        },
         {
           "name": "string.quoted.double.xenon",
           "begin": "\"",
@@ -73,13 +149,22 @@
     "comments": {
       "patterns": [
         {
-          "name": "comment.line.number-sign.xenon",
-          "match": "#.*$"
+          "name": "comment.line.double-slash.xenon",
+          "match": "//.*$"
+        },
+        {
+          "name": "comment.block.xenon",
+          "begin": "/\\*+",
+          "end": "\\*+/"
         }
       ]
     },
     "constants": {
       "patterns": [
+        {
+          "match": "\\b0x[0-9a-fA-F]+\\b",
+          "name": "constant.numeric.hex.xenon"
+        },
         {
           "match": "\\b[0-9]+(\\.[0-9]+)?\\b",
           "name": "constant.numeric.xenon"
@@ -89,7 +174,7 @@
     "annotations": {
       "patterns": [
         {
-          "match": "@[a-zA-Z_][a-zA-Z0-9_]*",
+          "match": "@[a-zA-Z_][a-zA-Z0-9_]*(?:\\([^)]*\\))?",
           "name": "entity.name.tag.xenon"
         }
       ]
@@ -97,16 +182,178 @@
     "operators": {
       "patterns": [
         {
-          "match": "[:-]?=|[+\\-*/%&|^<>!]=?|=>",
+          "match": "=",
           "name": "keyword.operator.xenon"
+        },
+        {
+          "match": "\\?",
+          "name": "keyword.operator.xenon"
+        },
+        {
+          "match": "[+\\-*/%&^<>!]=?",
+          "name": "keyword.operator.xenon"
+        }
+      ]
+    },
+    "punctuation": {
+      "patterns": [
+        {
+          "match": ":",
+          "name": "punctuation.definition.xenon"
+        },
+        {
+          "match": "\\|",
+          "name": "keyword.operator.xenon"
+        },
+        {
+          "match": ",",
+          "name": "punctuation.separator.xenon"
+        },
+        {
+          "match": "\\(",
+          "name": "punctuation.section.parens.begin.xenon"
+        },
+        {
+          "match": "\\)",
+          "name": "punctuation.section.parens.end.xenon"
+        }
+      ]
+    },
+    "capitalizedIdentifiers": {
+      "patterns": [
+        {
+          "match": "\\b([A-Z][a-zA-Z0-9_]*)\\b",
+          "name": "entity.name.type.xenon"
         }
       ]
     },
     "functions": {
       "patterns": [
         {
-          "match": "\\b([a-zA-Z_][a-zA-Z0-9_]*)\\s*(?=\\()",
+          "match": "\\b([a-z][a-zA-Z0-9_]*)\\s*(?=\\()",
           "name": "entity.name.function.xenon"
+        }
+      ]
+    },
+    "sections": {
+      "patterns": [
+        {
+          "match": "^(#+)\\s+([a-zA-Z_][a-zA-Z0-9_]*)",
+          "captures": {
+            "1": {"name": "markup.heading.xenon"},
+            "2": {"name": "entity.name.section.xenon"}
+          }
+        }
+      ]
+    },
+    "binary": {
+      "patterns": [
+        {
+          "begin": "<<",
+          "beginCaptures": {
+            "0": { "name": "keyword.operator.xenon" }
+          },
+          "end": ">>",
+          "endCaptures": {
+            "0": { "name": "keyword.operator.xenon" }
+          },
+          "name": "string.other.binary.xenon",
+          "patterns": [
+            {
+              "match": "\\b[0-9]+\\b",
+              "name": "constant.numeric.xenon"
+            },
+            {
+              "match": "/(?:utf8|hex|base32|base64)\\b",
+              "name": "keyword.other.encoding.xenon"
+            },
+            {
+              "include": "#strings"
+            },
+            {
+              "include": "#comments"
+            }
+          ]
+        }
+      ]
+    },
+    "mapLiteral": {
+      "patterns": [
+        {
+          "begin": "{",
+          "end": "}",
+          "name": "meta.structure.dictionary.xenon",
+          "patterns": [
+            {
+              "include": "#comments"
+            },
+            {
+              "begin": "\"",
+              "end": "\"",
+              "name": "string.quoted.double.xenon meta.structure.dictionary.key.xenon",
+              "patterns": [
+                {
+                  "name": "constant.character.escape.xenon",
+                  "match": "\\\\."
+                }
+              ]
+            },
+            {
+              "begin": "'",
+              "end": "'",
+              "name": "string.quoted.single.xenon meta.structure.dictionary.key.xenon",
+              "patterns": [
+                {
+                  "name": "constant.character.escape.xenon",
+                  "match": "\\\\."
+                }
+              ]
+            },
+            {
+              "include": "#punctuation"
+            },
+            {
+              "include": "#constants"
+            },
+            {
+              "include": "#strings"
+            },
+            {
+              "include": "#mapLiteral"
+            },
+            {
+              "include": "#listLiteral"
+            }
+          ]
+        }
+      ]
+    },
+    "listLiteral": {
+      "patterns": [
+        {
+          "begin": "\\[",
+          "end": "\\]",
+          "name": "meta.structure.array.xenon",
+          "patterns": [
+            {
+              "include": "#comments"
+            },
+            {
+              "include": "#punctuation"
+            },
+            {
+              "include": "#constants"
+            },
+            {
+              "include": "#strings"
+            },
+            {
+              "include": "#mapLiteral"
+            },
+            {
+              "include": "#listLiteral"
+            }
+          ]
         }
       ]
     }

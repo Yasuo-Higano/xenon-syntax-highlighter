@@ -1,3 +1,7 @@
 # 作るもの
 - vscode extension
 - .xenonファイルのシンタックスハイライティングができるようにする。
+
+## ファイル構成
+- Xenon.md Xenon DSLの仕様
+- xenon.pegjs パーサーのコード

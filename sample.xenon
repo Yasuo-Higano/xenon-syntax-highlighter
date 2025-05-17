@@ -1,17 +1,70 @@
-# これはXenonのサンプルファイルです
+// Xenon サンプルファイル
 
-type Person = {
-  name: string
-  age: number
-}
+/*
+ * これはXenon DSLのサンプルファイルです
+ * シンタックスハイライトをテストします
+ */
 
-enum Color {
-  RED
-  GREEN
-  BLUE
-}
+// 列挙型定義
+defenum Role = Admin | User | Guest
 
-@important
-value = 42
+// 共用型定義
+defunion Item = Text | Image | Audio
 
-name := "Hello World" 
+// 通常型定義
+deftype User(
+  @id id: int,
+  @range(0, 150) age: int = 30,
+  name: string = "anonymous",
+  role: Role = User,
+  active: bool = true,
+  tags: list<string> = ["user", "active"],
+  metadata: map<string, string> = {
+    "created": "2023-01-01",
+    "source": "registration"
+  }
+)
+
+deftype BinaryData(
+  name: string,
+  data: binary = <<
+    1, 2, 3, 
+    "UTF8文字列", 
+    "0123ABCDEF"/hex,
+    "BASE32DATA"/base32,
+    "BASE64DATA"/base64
+  >>
+)
+
+// セクションとインスタンス宣言
+# Users
+User(id: 1, name: "Alice", age: 28)
+User(id: 2, name: "Bob", age: 35, role: Admin)
+
+## Admins
+User(
+  id: 3, 
+  name: "Carol", 
+  role: Admin,
+  tags: ["admin", "manager"]
+)
+
+# BinaryExamples
+BinaryData(name: "sample1", data: <<1, 2, 3>>)
+BinaryData(
+  name: "sample2",
+  data: <<
+    "This is a test"/utf8,
+    "48656C6C6F"/hex
+  >>
+)
+
+// 複数行の文字列リテラル
+User(
+  id: 4,
+  name: """
+  David
+  Johnson
+  """,
+  role: User
+) 
